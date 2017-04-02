@@ -1,0 +1,93 @@
+MOving shit around you need udp and tcp 
+
+IP stack for processing 
+does processing till layer 4 
+
+after that the browser tales care of it 
+
+sockets are gateway to submit stuff to operatubg systen
+where to send a packet is dependent of  the IP address + port (UDP and TCP)
+communication between stack and application is made between ip stack 
+
+How to build client and server usong sockets 
+
+	First make tehe UDP 
+	then TCP 
+
+	Coding is done in python 
+	
+udpserver	
+//127.0.0.1 is the loopbacl address	
+from socket import *
+servPort = 54000
+servSock = socket(AF_INET,SOCK_DGRAM) // layer 3 an IP and layer 4 as UDP 
+// now we need to bind to a particluar address
+
+servSock.bind(("",servPort))
+
+while(True):
+	message, clientAddr = servSock.recvfrom(1024)
+	txt = message.decode()
+	servSock.sendto(text.upper().encode(),clientAddr)
+	
+	
+udpclient
+
+from socket import * 
+client Port = 55000
+clientSock= socket (AF_INET, SOCK DGRAM)
+
+clientSock.bind(("",clientPort))	
+
+while(True):
+	inputMsg = raw_input("Enter message: ")
+	clientSock. send to (inputMsg.encode(), ("", 54000))
+	
+	message, servAddr = clientSock.recvfrom(1024)
+	print.(message.decode())
+	
+	
+	
+	
+TCP (client oreineted system )
+
+One packet for everything  in UDP 
+but TCP is different ?
+
+
+
+from socket import * 
+servPort = 52000
+servSock= socket (AF_INET, SOCK_STREAM)
+
+clientSock.bind(("",servPort))
+
+
+while(True):
+	print("Waiting for connection request...")
+	servSock.listen(1)
+	connSock, client Addr = servSock.accept()
+	print("CLIENT :")
+	print(clientAddr)
+	print("CONNECTED")
+
+	message = connSock.recv(1024)
+	txt = message.decode()
+	
+	connSock/send(txt.upper().encode())
+	connSock.close()
+	
+	
+Tcp client
+
+from socket import * 
+clientPort = 51000
+clientSock= socket (AF_INET, SOCK_STREAM)
+
+clientSock.bind(("", clientPort))
+
+inputMsg = raw_input("ENter input : ")
+
+clientSock.send(inputMsg.encode())
+
+resp = clientSOck.recv(1024)	
